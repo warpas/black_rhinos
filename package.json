@@ -5,9 +5,13 @@
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
+    "@rails/webpacker": "4.2.2",
+    "serialize-javascript": ">=2.1.1",
     "turbolinks": "^5.2.0",
-    "webpacker": "^4.6.0",
-    "serialize-javascript": ">=2.1.1"
+    "webpacker": "^4.6.0"
   },
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "devDependencies": {
+    "webpack-dev-server": "^3.11.0"
+  }
 }
