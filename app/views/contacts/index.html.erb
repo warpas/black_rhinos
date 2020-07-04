@@ -1,0 +1,10 @@
+<h3>List all email we got, because that's secure:</h3>
+<ul>
+  <% @contacts.each do |contact| %>
+    <li>
+      <%= contact.email %>
+      <%= link_to "Remove", contact, method: :delete, data: { confirm: "Are you sure?" } %>
+    </li>
+  <% end %>
+</ul>
+<%= link_to "Add a new contact", new_contact_path %>

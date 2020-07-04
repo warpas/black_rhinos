@@ -1,0 +1,13 @@
+<h3>Would you like more?</h3>
+<p>If you enjoy this presentation and would like to see more from us, leave us your email address. We'll let you know when our next project drops!
+
+<%= form_with model: @contact do %>
+  <%= label(:contact, :email) %><%= email_field(:contact, :email) %>
+  <%= submit_tag("Send") %>
+<% end %>
+<%# <form method="POST">
+
+                <form method="POST">{% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="save btn btn-default">Save</button>
+                </form> %>
