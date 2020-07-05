@@ -1,0 +1,10 @@
+body {
+  background: black;
+  color: white;
+  text-transform: uppercase;
+}
+
+body a {
+  color: white;
+  text-decoration: none;
+}
