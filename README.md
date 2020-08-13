@@ -15,7 +15,7 @@
 - Create `config/database.yml`. Use `config/database.yml.example`
 - Run `bundle install` in the project directory
 - Create and migrate the database `bundle exec rails db:create` and `bundle exec rails db:migrate` in the project directory
-- Install JS dependencies with `bundle exec rails webpacker:install` in the project directory
+- Install JS dependencies with `yarn install` in the project directory
 - Run webpacker with `bundle exec rails webpacker:install` in the project directory
 - Once the configuration above is complete you can start the application server with `bundle exec rails server`
 
