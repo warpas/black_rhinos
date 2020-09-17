@@ -1,10 +1,22 @@
 body {
-  background: black;
+  background: #E5E5E5;
   color: white;
   text-transform: uppercase;
 }
 
 body a {
-  color: white;
+  color: #3D3D3D;
   text-decoration: none;
+}
+
+header {
+  display: grid;
+  grid-template-columns: 10% 80% 10%;
+  grid-auto-flow: column;
+}
+
+header .menu_button {
+  grid-column-start: 3;
+  grid-column-end: 3;
+  width: 50px;
 }
