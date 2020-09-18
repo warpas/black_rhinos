@@ -2,3 +2,42 @@ nav {
   display: flex;
   flex-direction: column;
 }
+
+.content {
+  width: 930px;
+}
+
+.content .situation {
+}
+
+.content .situation h3 {
+  height: 100px;
+
+  font-family: Times New Roman;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 87.4%;
+
+  color: #000000;
+}
+
+.content .situation p {
+  height: 595px;
+
+  font-family: Times New Roman;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 33px;
+  line-height: 87.4%;
+
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+
+  color: #000000;
+}
+
+.content .situation p .highlight {
+  font-style: italic;
+  color: #ffffff;
+}
