@@ -256,7 +256,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
-  capistrano (~> 3.14)
+  capistrano (~> 3.16)
   capybara (>= 2.15)
   jbuilder (~> 2.7)
   listen (~> 3.2)
