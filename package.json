@@ -10,6 +10,7 @@
     "serialize-javascript": ">=2.1.1",
     "three": "^0.125.0",
     "turbolinks": "^5.2.0",
+    "url-regex": "4.1.1",
     "webpacker": "^4.6.0"
   },
   "version": "0.1.0",
