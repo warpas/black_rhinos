@@ -7,12 +7,12 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.1.1",
     "babel-loader": "^8.1.0",
-    "jpeg-js": "0.4.3", // added because of Dependabot alerts
+    "jpeg-js": "0.4.3",
     "resize-img": "2",
     "serialize-javascript": ">=2.1.1",
     "three": "^0.125.0",
     "turbolinks": "^5.2.0",
-    "url-regex": "4.1.1",
+    "url-regex": "5.0.0",
     "webpacker": "^4.6.0"
   },
   "version": "0.1.0",
