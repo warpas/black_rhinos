@@ -34,6 +34,16 @@
 /config/master.key
 /config/database.yml
 
+# Used by dotenv library to load environment variables.
+.env
+
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
 ## OLD
 # *.gem
 # *.rbc
@@ -46,9 +56,6 @@
 # /test/tmp/
 # /test/version_tmp/
 # /tmp/
-
-# # Used by dotenv library to load environment variables.
-# # .env
 
 # # Ignore Byebug command history file.
 # .byebug_history
@@ -91,10 +98,3 @@
 
 # # Used by RuboCop. Remote config files pulled in from inherit_from directive.
 # # .rubocop-https?--*
-
-/public/packs
-/public/packs-test
-/node_modules
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
