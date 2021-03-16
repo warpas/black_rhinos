@@ -4,21 +4,25 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 
-//Get DOM element
+/**
+ * Get DOM element
+ */
+
 const canvas = document.querySelector('canvas.webgl')
 console.log(canvas)
 
-
-//Debug
+/**
+ * Debug
+ */
 const gui = new dat.GUI()
 
 
 
+/**
+ * Instantiate a loader
+ */
 
-// Instantiate a loader
 const loader = new GLTFLoader()
-let suzanne = new THREE.Object3D
-let particles = new THREE.Points
 
 loader.load(
     'img/black-rhino.gltf',
@@ -40,6 +44,7 @@ loader.load(
             .onChange(() =>
             {
                model.material.color.set(parameters.color)
+             
             })
 
 
@@ -49,21 +54,32 @@ loader.load(
 )
 
 
-//Scene
+
+
+/**
+ * Scene
+ */
 const scene = new THREE.Scene()
 
-//Sizes
+/**
+ * Sizes
+ */
 const sizes = {
     width: window.innerWidth,
     height: window.innerHeight
 }
 
-//Camera
+/**
+ * Camera
+ */
 const camera = new THREE.PerspectiveCamera(15, sizes.width / sizes.height, 0.1, 100)
+camera.position.y = .05
 camera.position.z = 2
 scene.add(camera)
 
-//Light
+/**
+ * Lights
+ */
 
 //Point light
 const light = new THREE.PointLight( 0xFFffff, 2 )
@@ -76,14 +92,30 @@ scene.add( light )
 const ambientLight = new THREE.AmbientLight( 0xffffff );
 scene.add(ambientLight)
 
+
 //Enable mouse control
-const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = true
+//const controls = new OrbitControls(camera, canvas)
+//controls.enableDamping = true
+
+const mouse = new THREE.Vector2();
+const target = new THREE.Vector2();
+canvas.addEventListener("mousemove", onMouseMove, false);
+
+function onMouseMove(event){
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    //console.log (pointOfIntersection)
+  
+    
+}
 
 
+const axesHelper = new THREE.AxesHelper( 5 );
+scene.add( axesHelper );
 
-
-//Renderer
+/**
+ * Renderer
+ */
 const renderer = new THREE.WebGLRenderer( {
 	antialias: true,
 	canvas: canvas
@@ -93,8 +125,9 @@ const renderer = new THREE.WebGLRenderer( {
 renderer.setSize( sizes.width, sizes.height )
 
 
-
-//Resize
+/**
+ * Handle window resize
+ */
 
 window.addEventListener('resize', () =>
 {
@@ -112,12 +145,23 @@ window.addEventListener('resize', () =>
 })
 
 
+/**
+ * Animate function
+ */
+
 function animate() {
 
 	requestAnimationFrame( animate )
 
     //Update controls
-    controls.update();
+    //controls.update();
+
+    //Add delay to look at
+    target.x += ( mouse.x - target.x ) * .02
+    //target.y += ( mouse.y - target.y ) * .02
+
+    camera.position.x = target.x * 0.15
+    //camera.position.y = target.y * 0.01
 
 	renderer.render( scene, camera )
 
