@@ -11,6 +11,7 @@
     "jpeg-js": "0.4.3",
     "resize-img": "2",
     "serialize-javascript": ">=2.1.1",
+    "stats.js": "^0.17.0",
     "three": "^0.125.0",
     "turbolinks": "^5.2.0",
     "url-regex": "5.0.0",

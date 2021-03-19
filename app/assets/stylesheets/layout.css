@@ -1,10 +1,16 @@
+:root {
+  --scrollbar: 0px;
+}
+
 body {
-  background: #E5E5E5;
+  background:#fff;
   color: white;
   text-transform: uppercase;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  font-family: abolition, sans-serif;
+  box-sizing: border-box;
+  
 }
 
 body a {
@@ -25,8 +31,61 @@ header .menu_button {
 }
 
 .webgl{
-  position: fixed;
-  top:0; 
-  left: 0;
+  height: 100vh;
+  width: 90vw;
+  width: calc(100vw - var(--scrollbar));
+  position: absolute;
+  top:0;
+  left:0;
 }
 
+article{
+  height: 100vh;
+  width: 80vw;
+  display: block;
+  overflow: hidden;
+  margin: 0 auto;
+  display: flex;
+}
+
+#hero_01{
+  width: 100vw;
+  width: calc(100vw - var(--scrollbar));
+  height: 100vh;
+}
+
+#hero_01 article{
+  pointer-events: none;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+}
+
+#hero_01 h1{
+  color: #171717;
+  font-size: 8rem;
+  pointer-events: none;
+  letter-spacing: 4px;
+  line-height: 90%;
+}
+
+#section_02{
+  display: flex;
+  justify-content: center;
+}
+#section_02 h2{
+  display: flex;
+  align-self: center;
+  color: #171717;
+  font-size: 5rem;
+  text-align: center;
+  width: 800px;
+  letter-spacing: 1px;
+  line-height: 90%;
+
+}
+
+.label{
+  color: #171717;
+}
