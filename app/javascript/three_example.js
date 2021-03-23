@@ -3,9 +3,11 @@ import * as dat from 'dat.gui'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import Stats from 'stats.js'
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js'
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
+import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
 
 
 const getScrollbarWidth = () => {
@@ -197,6 +199,7 @@ window.addEventListener('resize', () =>
 const renderScene = new RenderPass( scene, camera )
 
 
+//Bokeh
 const bokehPass = new BokehPass( scene, camera, {
     focus: 10.0,
     aperture: 20,
@@ -231,11 +234,23 @@ gui.add( effectController, "maxblur", 0.0, 0.04, 0.001 ).onChange( matChanger )
 matChanger();
 
 
+
+//FXAA
+const fxaaPass = new ShaderPass( FXAAShader );
+
+const pixelRatio = renderer.getPixelRatio();
+
+fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( sizes.width * pixelRatio );
+fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( sizes.height * pixelRatio );
+
+
 const composer = new EffectComposer( renderer )
 
-composer.setSize( window.innerWidth, window.innerHeight )
+composer.setSize( sizes.width, sizes.height )
 composer.addPass( renderScene )
-composer.addPass( bokehPass )
+//composer.addPass( bokehPass )
+composer.addPass( fxaaPass)
+
 
 
 
