@@ -10,35 +10,35 @@ import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
 
 const getScrollbarWidth = () => {
     // Create a temporary div container and append it into the body
-    const container = document.createElement('div');
+    const container = document.createElement('div')
     // Append the container in the body
-    document.body.appendChild(container);
+    document.body.appendChild(container)
     // Force scrollbar on the container
-    container.style.overflow = 'scroll';
+    container.style.overflow = 'scroll'
   
     // Add ad fake div inside the container
-    const inner = document.createElement('div');
-    container.appendChild(inner);
+    const inner = document.createElement('div')
+    container.appendChild(inner)
   
     // Calculate the width based on the container width minus its child width
     const width = container.offsetWidth - inner.offsetWidth;
     // Remove the container from the body
-    document.body.removeChild(container);
+    document.body.removeChild(container)
   
-    return width;
+    return width
   };
   
   // Get the scrollbar dimension
-  const scrollbarWidth = getScrollbarWidth();
+  const scrollbarWidth = getScrollbarWidth()
 
 
   // Set a custom property with the value we calculated
-  document.documentElement.style.setProperty('--scrollbar', `${scrollbarWidth}px`);
+  document.documentElement.style.setProperty('--scrollbar', `${scrollbarWidth}px`)
 
-var stats = new Stats();
+var stats = new Stats()
 stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-document.body.appendChild( stats.dom );
-requestAnimationFrame( animate );
+document.body.appendChild( stats.dom )
+requestAnimationFrame( animate )
 
 
 
@@ -138,13 +138,15 @@ scene.add(ambientLight)
 /**
  * Calculate mouse position
  */
-const mouse = new THREE.Vector2();
-const target = new THREE.Vector2();
-canvas.addEventListener("mousemove", onMouseMove, false);
+const mouse = new THREE.Vector2()
+mouse.x = 0
+mouse.y = 1
+const target = new THREE.Vector2()
+canvas.addEventListener("mousemove", onMouseMove, false)
 
 function onMouseMove(event){
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = - (event.clientY / window.innerHeight) * 2 + 2.2;
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+    mouse.y = - (event.clientY / window.innerHeight) * 2 + 2.2
     //console.log (pointOfIntersection)
 }
 
@@ -152,8 +154,8 @@ function onMouseMove(event){
 /**
  * Add axes helper - remove in production 
  */
-const axesHelper = new THREE.AxesHelper( 5 );
-scene.add( axesHelper );
+//const axesHelper = new THREE.AxesHelper( 5 );
+//scene.add( axesHelper );
 
 /**
  * Renderer
@@ -222,18 +224,18 @@ const matChanger = function ( ) {
 };
 
 
-gui.add( effectController, "focus", 10.0, 50.0, 1 ).onChange( matChanger );
-gui.add( effectController, "aperture", 0, 30, 0.1 ).onChange( matChanger );
-gui.add( effectController, "maxblur", 0.0, 0.04, 0.001 ).onChange( matChanger );
+gui.add( effectController, "focus", 10.0, 50.0, 1 ).onChange( matChanger )
+gui.add( effectController, "aperture", 0, 30, 0.1 ).onChange( matChanger )
+gui.add( effectController, "maxblur", 0.0, 0.04, 0.001 ).onChange( matChanger )
 
 matChanger();
 
 
-const composer = new EffectComposer( renderer );
+const composer = new EffectComposer( renderer )
 
 composer.setSize( window.innerWidth, window.innerHeight )
-composer.addPass( renderScene );
-composer.addPass( bokehPass );
+composer.addPass( renderScene )
+composer.addPass( bokehPass )
 
 
 
@@ -260,9 +262,11 @@ function animate() {
 
  
     stats.begin();
+
     // monitored code goes here
 	renderer.render( scene, camera )
     composer.render();
+
     stats.end();
 
     requestAnimationFrame( animate )
