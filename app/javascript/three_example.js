@@ -2,7 +2,8 @@ import * as THREE from 'three'
 import * as dat from 'dat.gui'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import Stats from 'stats.js'
+import Stats from 'three/examples/jsm/libs/stats.module.js';
+//import Stats from 'stats.js'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js'
@@ -112,7 +113,7 @@ const sizes = {
 /**
  * Camera
  */
-const camera = new THREE.PerspectiveCamera(15, sizes.width / sizes.height, 0.1, 100)
+const camera = new THREE.PerspectiveCamera(15, sizes.width / sizes.height, 0.01, 10)
 camera.position.y = 2
 camera.position.z = 2
 scene.add(camera)
@@ -163,12 +164,17 @@ function onMouseMove(event){
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer( {
-	antialias: true,
+	antialias: false,
 	canvas: canvas
 
 } )
 
 renderer.setSize( sizes.width, sizes.height )
+
+//renderer.outputEncoding = THREE.sRGBEncoding;
+
+renderer.setScissorTest( true )
+
 
 
 /**
@@ -201,8 +207,8 @@ const renderScene = new RenderPass( scene, camera )
 
 //Bokeh
 const bokehPass = new BokehPass( scene, camera, {
-    focus: 10.0,
-    aperture: 20,
+    focus: 1.93,
+    aperture: 0.15,
     maxblur: 0.02,
 
     width: sizes.width,
@@ -212,24 +218,24 @@ const bokehPass = new BokehPass( scene, camera, {
 
 const effectController = {
 
-    focus: 10.0,
-    aperture: 20,
-    maxblur: 0.02
+    focus: 1.93,
+    aperture: 0.15,
+    maxblur: 0.02,
 
 };
 
 const matChanger = function ( ) {
 
     bokehPass.uniforms[ "focus" ].value = effectController.focus
-    bokehPass.uniforms[ "aperture" ].value = effectController.aperture * 0.00001
+    bokehPass.uniforms[ "aperture" ].value = effectController.aperture * 0.01
     bokehPass.uniforms[ "maxblur" ].value = effectController.maxblur
 
 };
 
 
-gui.add( effectController, "focus", 10.0, 50.0, 1 ).onChange( matChanger )
-gui.add( effectController, "aperture", 0, 30, 0.1 ).onChange( matChanger )
-gui.add( effectController, "maxblur", 0.0, 0.04, 0.001 ).onChange( matChanger )
+gui.add( effectController, "focus", 0, 10, 0.01 ).onChange( matChanger )
+gui.add( effectController, "aperture", 0, 7, 0.01 ).onChange( matChanger )
+gui.add( effectController, "maxblur", 0.0, 1, 0.001 ).onChange( matChanger )
 
 matChanger();
 
@@ -248,8 +254,8 @@ const composer = new EffectComposer( renderer )
 
 composer.setSize( sizes.width, sizes.height )
 composer.addPass( renderScene )
-//composer.addPass( bokehPass )
-composer.addPass( fxaaPass)
+composer.addPass( bokehPass )
+//composer.addPass( fxaaPass)
 
 
 
@@ -263,7 +269,8 @@ composer.addPass( fxaaPass)
 function animate() {
 
 
-
+    requestAnimationFrame( animate )
+    
     //Update controls
     //controls.update();
 
@@ -276,15 +283,16 @@ function animate() {
     camera.position.y = target.y * 0.05
 
  
-    stats.begin();
+
 
     // monitored code goes here
+    renderer.setScissor(0,1, target.x * sizes.width, sizes.height)
 	renderer.render( scene, camera )
     composer.render();
 
-    stats.end();
+    stats.update();
 
-    requestAnimationFrame( animate )
+   
 }
 
 animate(renderer, scene, camera)
