@@ -1,6 +1,10 @@
 nav {
   display: flex;
   flex-direction: column;
+  position: absolute;
+  top:40px;
+  left: 200px;
+  z-index: 2;
 }
 
 .content {

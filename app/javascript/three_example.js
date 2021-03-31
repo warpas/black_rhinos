@@ -173,7 +173,7 @@ renderer.setSize( sizes.width, sizes.height )
 
 //renderer.outputEncoding = THREE.sRGBEncoding;
 
-renderer.setScissorTest( true )
+//renderer.setScissorTest( true )
 
 
 
@@ -286,7 +286,7 @@ function animate() {
 
 
     // monitored code goes here
-    renderer.setScissor(0,1, target.x * sizes.width, sizes.height)
+    //renderer.setScissor(0,1, target.x * sizes.width, sizes.height)
 	renderer.render( scene, camera )
     composer.render();
 
