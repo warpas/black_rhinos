@@ -1,14 +1,17 @@
 nav {
   display: flex;
   flex-direction: column;
+  position: absolute;
+  top:40px;
+  left: 200px;
+  z-index: 2;
 }
 
 .content {
   width: 930px;
 }
 
-.content .situation {
-}
+
 
 .content .situation h3 {
   height: 100px;

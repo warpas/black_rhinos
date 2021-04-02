@@ -2,43 +2,46 @@ import * as THREE from 'three'
 import * as dat from 'dat.gui'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import Stats from 'stats.js'
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
+import Stats from 'three/examples/jsm/libs/stats.module.js';
+//import Stats from 'stats.js'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js'
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
+import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
 
 
 const getScrollbarWidth = () => {
     // Create a temporary div container and append it into the body
-    const container = document.createElement('div');
+    const container = document.createElement('div')
     // Append the container in the body
-    document.body.appendChild(container);
+    document.body.appendChild(container)
     // Force scrollbar on the container
-    container.style.overflow = 'scroll';
+    container.style.overflow = 'scroll'
   
     // Add ad fake div inside the container
-    const inner = document.createElement('div');
-    container.appendChild(inner);
+    const inner = document.createElement('div')
+    container.appendChild(inner)
   
     // Calculate the width based on the container width minus its child width
     const width = container.offsetWidth - inner.offsetWidth;
     // Remove the container from the body
-    document.body.removeChild(container);
+    document.body.removeChild(container)
   
-    return width;
+    return width
   };
   
   // Get the scrollbar dimension
-  const scrollbarWidth = getScrollbarWidth();
+  const scrollbarWidth = getScrollbarWidth()
 
 
   // Set a custom property with the value we calculated
-  document.documentElement.style.setProperty('--scrollbar', `${scrollbarWidth}px`);
+  document.documentElement.style.setProperty('--scrollbar', `${scrollbarWidth}px`)
 
-var stats = new Stats();
+var stats = new Stats()
 stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-document.body.appendChild( stats.dom );
-requestAnimationFrame( animate );
+document.body.appendChild( stats.dom )
+requestAnimationFrame( animate )
 
 
 
@@ -110,7 +113,7 @@ const sizes = {
 /**
  * Camera
  */
-const camera = new THREE.PerspectiveCamera(15, sizes.width / sizes.height, 0.1, 100)
+const camera = new THREE.PerspectiveCamera(15, sizes.width / sizes.height, 0.01, 10)
 camera.position.y = 2
 camera.position.z = 2
 scene.add(camera)
@@ -138,13 +141,15 @@ scene.add(ambientLight)
 /**
  * Calculate mouse position
  */
-const mouse = new THREE.Vector2();
-const target = new THREE.Vector2();
-canvas.addEventListener("mousemove", onMouseMove, false);
+const mouse = new THREE.Vector2()
+mouse.x = 0
+mouse.y = 1
+const target = new THREE.Vector2()
+canvas.addEventListener("mousemove", onMouseMove, false)
 
 function onMouseMove(event){
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = - (event.clientY / window.innerHeight) * 2 + 2.2;
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1
+    mouse.y = - (event.clientY / window.innerHeight) * 2 + 2.2
     //console.log (pointOfIntersection)
 }
 
@@ -152,19 +157,24 @@ function onMouseMove(event){
 /**
  * Add axes helper - remove in production 
  */
-const axesHelper = new THREE.AxesHelper( 5 );
-scene.add( axesHelper );
+//const axesHelper = new THREE.AxesHelper( 5 );
+//scene.add( axesHelper );
 
 /**
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer( {
-	antialias: true,
+	antialias: false,
 	canvas: canvas
 
 } )
 
 renderer.setSize( sizes.width, sizes.height )
+
+//renderer.outputEncoding = THREE.sRGBEncoding;
+
+//renderer.setScissorTest( true )
+
 
 
 /**
@@ -195,9 +205,10 @@ window.addEventListener('resize', () =>
 const renderScene = new RenderPass( scene, camera )
 
 
+//Bokeh
 const bokehPass = new BokehPass( scene, camera, {
-    focus: 10.0,
-    aperture: 20,
+    focus: 1.93,
+    aperture: 0.15,
     maxblur: 0.02,
 
     width: sizes.width,
@@ -207,33 +218,45 @@ const bokehPass = new BokehPass( scene, camera, {
 
 const effectController = {
 
-    focus: 10.0,
-    aperture: 20,
-    maxblur: 0.02
+    focus: 1.93,
+    aperture: 0.15,
+    maxblur: 0.02,
 
 };
 
 const matChanger = function ( ) {
 
     bokehPass.uniforms[ "focus" ].value = effectController.focus
-    bokehPass.uniforms[ "aperture" ].value = effectController.aperture * 0.00001
+    bokehPass.uniforms[ "aperture" ].value = effectController.aperture * 0.01
     bokehPass.uniforms[ "maxblur" ].value = effectController.maxblur
 
 };
 
 
-gui.add( effectController, "focus", 10.0, 50.0, 1 ).onChange( matChanger );
-gui.add( effectController, "aperture", 0, 30, 0.1 ).onChange( matChanger );
-gui.add( effectController, "maxblur", 0.0, 0.04, 0.001 ).onChange( matChanger );
+gui.add( effectController, "focus", 0, 10, 0.01 ).onChange( matChanger )
+gui.add( effectController, "aperture", 0, 7, 0.01 ).onChange( matChanger )
+gui.add( effectController, "maxblur", 0.0, 1, 0.001 ).onChange( matChanger )
 
 matChanger();
 
 
-const composer = new EffectComposer( renderer );
 
-composer.setSize( window.innerWidth, window.innerHeight )
-composer.addPass( renderScene );
-composer.addPass( bokehPass );
+//FXAA
+const fxaaPass = new ShaderPass( FXAAShader );
+
+const pixelRatio = renderer.getPixelRatio();
+
+fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( sizes.width * pixelRatio );
+fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( sizes.height * pixelRatio );
+
+
+const composer = new EffectComposer( renderer )
+
+composer.setSize( sizes.width, sizes.height )
+composer.addPass( renderScene )
+composer.addPass( bokehPass )
+//composer.addPass( fxaaPass)
+
 
 
 
@@ -246,7 +269,8 @@ composer.addPass( bokehPass );
 function animate() {
 
 
-
+    requestAnimationFrame( animate )
+    
     //Update controls
     //controls.update();
 
@@ -259,13 +283,16 @@ function animate() {
     camera.position.y = target.y * 0.05
 
  
-    stats.begin();
+
+
     // monitored code goes here
+    //renderer.setScissor(0,1, target.x * sizes.width, sizes.height)
 	renderer.render( scene, camera )
     composer.render();
-    stats.end();
 
-    requestAnimationFrame( animate )
+    stats.update();
+
+   
 }
 
 animate(renderer, scene, camera)

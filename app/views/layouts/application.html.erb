@@ -6,11 +6,11 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', :defer => "defer" %>
     <link rel="stylesheet" href="https://use.typekit.net/wtb2dlu.css">
   </head>
 
-  <body>
+  <body data-barba="wrapper">
     <header>
       <div class="menu_button">
         <%= link_to "Menu", root_path %>
