@@ -16,7 +16,7 @@
     "stats.js": "^0.17.0",
     "three": "^0.125.0",
     "turbolinks": "^5.2.0",
-    "url-regex": "5.0.0",
+    "url-regex-safe": "v2.0.2",
     "webpacker": "^4.6.0"
   },
   "version": "0.1.0",
