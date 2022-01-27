@@ -14,7 +14,7 @@
     "resize-img": "2",
     "serialize-javascript": ">=2.1.1",
     "stats.js": "^0.17.0",
-    "three": "^0.125.0",
+    "three": "^0.137.0",
     "turbolinks": "^5.2.0",
     "url-regex-safe": "v2.0.2",
     "webpacker": "^4.6.0"
